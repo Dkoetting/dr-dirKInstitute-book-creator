@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dr. DirkInstitute | Book Creator</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+Pro:wght@500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+
+    :root {
+      /* etwas heller, aber immer noch „gebundenes Buch“ */
+      --bg: #1b2028;              /* heller als vorher */
+      --panel: #212632;           /* Karten */
+      --panel-inset: #191d26;     /* Eingelassene Flächen */
+      --border-soft: #343a48;
+      --border-strong: #4b5264;
+
+      --accent-ice: #7ea8ff;      /* Ice Blue */
+      --accent-steel: #5f6f8a;    /* Steel */
+      --accent-warm: #f97316;     /* Warm-Akzent */
+
+      --text-main: #f9fafb;
+      --text-muted: #c5cad8;
+
+      --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Source Serif Pro', 'Georgia', serif;
+
+      --mono: 'JetBrains Mono', monospace;
+      --r: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: radial-gradient(circle at top, #262d3a 0, var(--bg) 55%);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+
+    .header {
+      text-align: left;
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      object-fit: cover;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(126,168,255,0.45);
+      background: rgba(126,168,255,0.12);
+      color: var(--accent-ice);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .header-main {
+      margin-top: 8px;
+    }
+
+    .header h1 {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 560px;
+    }
+
+    .status-line {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    .card {
+      background: #242a37;             /* deutlich heller als vorher */
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r);
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.45);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent-steel);
+      color: #0b0d13;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      background: radial-gradient(circle at top, #2b3141 0, var(--panel-inset) 65%);
+      border: 1px solid var(--border-soft);
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .field input::placeholder {
+      color: #d1d5db;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--accent-ice);
+      box-shadow: 0 0 0 1px rgba(126,168,255,0.5);
+      background: radial-gradient(circle at top, #31384a 0, var(--panel-inset) 70%);
+    }
+
+    .drop {
+      border: 1px solid var(--border-soft);
+      border-radius: var(--r);
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      background: linear-gradient(145deg, #2a303f, #212632);
+      transition: all 0.2s;
+    }
+
+    .drop:hover,
+    .drop.over {
+      border-color: var(--accent-ice);
+      background: radial-gradient(circle at top, #343c4f 0, #232837 70%);
+    }
+
+    .drop h3 {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .drop p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .drop input {
+      display: none;
+    }
+
+    .flist {
+      margin-top: 16px;
+    }
+
+    .flist-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      padding-left: 2px;
+    }
+
+    .fitem {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      background: #2a3040;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-size: 13px;
+      transition: background 0.15s, opacity 0.15s;
+      border: 1px solid var(--border-soft);
+    }
+
+    .fitem.dragging {
+      opacity: 0.35;
+    }
+
+    .fitem.drag-over {
+      border-top-color: var(--accent-ice);
+    }
+
+    .drag-handle {
+      cursor: grab;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 4px 2px;
+      flex-shrink: 0;
+    }
+
+    .drag-handle span {
+      display: block;
+      width: 12px;
+      height: 2px;
+      background: #4b5563;
+      border-radius: 1px;
+    }
+
+    .fitem:hover .drag-handle span {
+      background: #e5e7eb;
+    }
+
+    .num-label {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-steel);
+      color: #0b0d13;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .fitem .n {
+      font-weight: 500;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--text-main);
+    }
+
+    .fitem .s {
+      color: var(--text-muted);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .fitem .x {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 18px;
+      flex-shrink: 0;
+      padding: 0 4px;
+      line-height: 1;
+    }
+
+    .fitem .x:hover {
+      color: var(--accent-warm);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: var(--r);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-go {
+      background: var(--accent-warm);
+      color: #111827;
+    }
+
+    .btn-go:hover:not(:disabled) {
+      background: #ea580c;
+      transform: translateY(-1px);
+    }
+
+    .btn-go:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-stop {
+      background: transparent;
+      color: #fca5a5;
+      border: 1px solid #f87171;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .btn-stop:hover {
+      background: rgba(248, 113, 113, 0.08);
+    }
+
+    .btn-dl {
+      background: #eefdf5;
+      color: #166534;
+      border: 1px solid #16a34a;
+      margin-top: 12px;
+    }
+
+    .btn-dl:hover {
+      background: #16a34a;
+      color: #02150a;
+    }
+
+    .prog {
+      margin-top: 28px;
+    }
+
+    .bar-bg {
+      width: 100%;
+      height: 7px;
+      background: #2b3141;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-ice), #ec4899);
+      border-radius: 999px;
+      transition: width 0.5s;
+    }
+
+    .prog-ch {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .prog-st {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .prog-tm {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+    }
+
+    .log-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 8px 0;
+      margin-top: 12px;
+    }
+
+    .log-btn:hover {
+      color: var(--text-main);
+    }
+
+    .log-box {
+      background: #222736;
+      border-radius: 8px;
+      padding: 14px;
+      max-height: 260px;
+      overflow-y: auto;
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.6;
+      border: 1px solid var(--border-soft);
+      color: #f3f4f6;
+    }
+
+    .log-ok {
+      color: #16a34a;
+    }
+
+    .log-err {
+      color: #fb7185;
+    }
+
+    .log-info {
+      color: var(--text-muted);
+    }
+
+    .result {
+      background: #ecfdf3;
+      border: 1px solid #16a34a;
+      border-radius: var(--r);
+      padding: 24px;
+      text-align: left;
+      margin-top: 22px;
+      color: #022c16;
+    }
+
+    .result h3 {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .result p {
+      font-size: 13px;
+      color: #14532d;
+      margin-bottom: 14px;
+    }
+
+    .rlist {
+      text-align: left;
+      margin-bottom: 14px;
+    }
+
+    .ritem {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 13px;
+    }
+
+    .ritem:last-child {
+      border-bottom: none;
+    }
+
+    .rcheck {
+      color: #16a34a;
+      font-weight: 700;
+    }
+
+    .footer {
+      margin-top: 32px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-soft);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    @media (max-width: 720px) {
+      .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .app {
+        padding: 24px 16px 48px;
+      }
+      .card {
+        padding: 22px 18px 18px;
+      }
+      .status-line {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <div class="header-top">
+        <div class="logo-wrap">
+          <img src="/Logo_Dr.DirkInstitute.jpg" alt="Dr. DirkInstitute" class="logo" />
+          <div>
+            <div class="badge">Dr. DirkInstitute</div>
+            <div class="header-main">
+              <h1>Book Creator</h1>
+              <p>Dokumenten-Basis definieren, Publikation spezifizieren, Manuskript fachlich sauber finalisieren.</p>
+            </div>
+          </div>
+        </div>
+        <div class="status-line">
+          System-Status: Kalibriert für Fachpublikationen · Engine: Claude&nbsp;4&nbsp;Opus
+        </div>
+      </div>
+    </div>
+
+    <!-- Karte 1: Dokumenten-Basis & Referenzdaten -->
+    <div class="card">
+      <div class="card-head">
+        <div class="num">1</div>
+        <div class="card-title">Dokumenten-Basis &amp; Referenzdaten</div>
+      </div>
+
+      <div class="drop" id="drop" onclick="document.getElementById('fi').click()">
+        <h3>Dateien hierher ziehen</h3>
+        <p>.docx, .pptx, .pdf, .txt, .md, .csv, .png, .jpg, .zip</p>
+        <input
+          type="file"
+          id="fi"
+          multiple
+          accept=".docx,.ppt,.pptx,.pdf,.txt,.md,.csv,.png,.jpg,.jpeg,.zip"
+        />
+      </div>
+
+      <div class="flist" id="flist"></div>
+    </div>
+
+    <!-- Karte 2: Spezifikationen der Publikation -->
+    <div class="card">
+      <div class="card-head">
+        <div class="num">2</div>
+        <div class="card-title">Spezifikationen der Publikation</div>
+      </div>
+
+      <div class="field">
+        <label>HAUPTTITEL</label>
+        <input
+          type="text"
+          id="title"
+          placeholder="z.B. Agentic Sovereignty – Praxiskompendium"
+        />
+      </div>
+
+      <div class="field">
+        <label>UNTERTITEL (OPTIONAL)</label>
+        <input
+          type="text"
+          id="subtitle"
+          placeholder="z.B. Governance-Framework für agentische KI"
+        />
+      </div>
+
+      <div class="field">
+        <label>PUBLIKATIONSTYP</label>
+        <select id="bookType">
+          <option value="sachbuch">Sachbuch</option>
+          <option value="fachbuch">Fachbuch</option>
+          <option value="artikel">Artikel / Whitepaper</option>
+          <option value="workbook">Workbook</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>ZIELGRUPPE</label>
+        <select id="audience">
+          <option value="c-level">C-Level</option>
+          <option value="management">Management</option>
+          <option value="wissenschaft">Wissenschaft / Forschung</option>
+          <option value="lehre">Lehre / Hochschule</option>
+          <option value="bildung">Bildung / Schule / Weiterbildung</option>
+          <option value="gemischt">Gemischt</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>LEVEL (VORKENNTNISSE)</label>
+        <select id="level">
+          <option value="einsteiger">Einsteiger</option>
+          <option value="fortgeschritten">Fortgeschrittene</option>
+          <option value="expert">Expert:innen</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>UMFANG PRO KAPITEL</label>
+        <select id="length">
+          <option value="kurz">Kurz (kompakt, auf den Punkt)</option>
+          <option value="standard" selected>Standard (empfohlen)</option>
+          <option value="ausfuehrlich">Ausführlich (mehr Beispiele/Details)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>PROZESSOR-KONFIGURATION</label>
+        <select id="model">
+          <option value="claude-opus-4-20250514">
+            Claude 4 Opus — höchste Genauigkeit, 3–5 Min/Kapitel
+          </option>
+          <option value="claude-sonnet-4-20250514">
+            Claude 4 Sonnet — schneller Durchlauf, 1–2 Min/Kapitel
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Buttons & Progress -->
+    <button class="btn btn-go" id="goBtn" onclick="generate()" disabled>
+      Manuskript finalisieren
+    </button>
+    <button class="btn btn-stop" id="stopBtn" onclick="showStopDialog()" style="display:none">
+      Vorgang abbrechen
+    </button>
+
+    <div class="prog" id="prog" style="display:none">
+      <div class="bar-bg"><div class="bar-fill" id="bar"></div></div>
+      <div class="prog-ch" id="pCh"></div>
+      <div class="prog-st" id="pSt"></div>
+      <div class="prog-tm" id="pTm"></div>
+      <button
+        class="log-btn"
+        onclick="document.getElementById('logBox').style.display =
+          document.getElementById('logBox').style.display === 'none' ? 'block' : 'none'"
+      >
+        ▼ Protokoll anzeigen
+      </button>
+      <div class="log-box" id="logBox" style="display:none"></div>
+    </div>
+
+    <div id="result" style="display:none"></div>
+
+    <div class="footer">
+      <div>Audit: Ausgaben gemäß Zitierregeln und Formalstandards des Dr.‑DirkInstitute.</div>
+      <div>Lokale Verarbeitung &amp; Enterprise-Level Data Protection.</div>
+    </div>
+  </div>
+
+  <script>
+    // Hier kommt deine JS-Logik (addFiles, renderFiles, generate, SSE etc.) hinein.
+    // Wichtig: In generate() zusätzlich bookType, level und length an die API hängen.
+  </script>
+</body>
+</html>
