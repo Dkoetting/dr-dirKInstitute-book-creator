@@ -1,0 +1,47 @@
+// server/routes/config.js
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+
+const router = express.Router();
+
+function loadJson(relativePath) {
+  const fullPath = path.join(__dirname, '..', 'config', relativePath);
+  const raw = fs.readFileSync(fullPath, 'utf8');
+  return JSON.parse(raw);
+}
+
+// GET /api/config/publication-options
+router.get('/publication-options', (req, res) => {
+  try {
+    const data = loadJson('publication-options.json');
+    res.json(data);
+  } catch (err) {
+    console.error('[config] Fehler publication-options:', err);
+    res.status(500).json({ error: 'Konfiguration publication-options konnte nicht geladen werden.' });
+  }
+});
+
+// GET /api/config/zielgruppen
+router.get('/zielgruppen', (req, res) => {
+  try {
+    const data = loadJson('Zielgruppe.json');
+    res.json(data);
+  } catch (err) {
+    console.error('[config] Fehler zielgruppen:', err);
+    res.status(500).json({ error: 'Konfiguration Zielgruppen konnte nicht geladen werden.' });
+  }
+});
+
+// GET /api/config/umfang
+router.get('/umfang', (req, res) => {
+  try {
+    const data = loadJson('Umfang.json');
+    res.json(data);
+  } catch (err) {
+    console.error('[config] Fehler umfang:', err);
+    res.status(500).json({ error: 'Konfiguration Umfang konnte nicht geladen werden.' });
+  }
+});
+
+module.exports = router;

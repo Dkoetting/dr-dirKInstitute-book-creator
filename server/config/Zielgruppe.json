@@ -1,0 +1,10 @@
+[
+  { "value": "c-level",      "label": "C-Level" },
+  { "value": "management",   "label": "Management" },
+  { "value": "operations",   "label": "Operations / Linienverantwortung" },
+  { "value": "wissenschaft", "label": "Wissenschaft / Forschung" },
+  { "value": "lehre",        "label": "Lehre / Hochschule" },
+  { "value": "bildung",      "label": "Bildung / Schule / Weiterbildung" },
+  { "value": "operations",   "label": "Operations _/ Betrieb" },
+  { "value": "gemischt",     "label": "Gemischt" }
+]

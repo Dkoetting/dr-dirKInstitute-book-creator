@@ -1,0 +1,28 @@
+{
+  "bookTypes": [
+    { "value": "sachbuch", "label": "Sachbuch" },
+    { "value": "fachbuch", "label": "Fachbuch" },
+    { "value": "wissenschaftlicher-artikel", "label": "Wissenschaftlicher Artikel" },
+    { "value": "whitepaper", "label": "Whitepaper" },
+    { "value": "workbook", "label": "Workbook" }
+  ],
+  "audiences": [
+    { "value": "c-level", "label": "C-Level" },
+    { "value": "management", "label": "Management" },
+    { "value": "operations", "label": "Operations" },
+    { "value": "wissenschaft", "label": "Wissenschaft / Forschung" },
+    { "value": "lehre", "label": "Lehre / Hochschule" },
+    { "value": "bildung", "label": "Bildung / Weiterbildung" },
+    { "value": "gemischt", "label": "Gemischt" }
+  ],
+  "levels": [
+    { "value": "einsteiger", "label": "Einsteiger" },
+    { "value": "fortgeschritten", "label": "Fortgeschrittene" },
+    { "value": "expert", "label": "Expert:innen" }
+  ],
+  "lengths": [
+    { "value": "kurz", "label": "Kurz (kompakt, auf den Punkt)" },
+    { "value": "standard", "label": "Standard (empfohlen)" },
+    { "value": "ausfuehrlich", "label": "Ausführlich (mehr Beispiele/Details)" }
+  ]
+}

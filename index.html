@@ -8,519 +8,212 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+Pro:wght@500;700&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
-
     :root {
-      /* etwas heller, aber immer noch „gebundenes Buch“ */
-      --bg: #1b2028;              /* heller als vorher */
-      --panel: #212632;           /* Karten */
-      --panel-inset: #191d26;     /* Eingelassene Flächen */
-      --border-soft: #343a48;
-      --border-strong: #4b5264;
-
-      --accent-ice: #7ea8ff;      /* Ice Blue */
-      --accent-steel: #5f6f8a;    /* Steel */
-      --accent-warm: #f97316;     /* Warm-Akzent */
-
+      --bg: #2b3343;
+      --panel: #2f384b;
+      --panel-inset: #263042;
+      --border-soft: #4a556b;
+      --border-strong: #66748b;
+      --accent-ice: #7ea8ff;
+      --accent-steel: #5f6f8a;
+      --accent-warm: #f97316;
       --text-main: #f9fafb;
-      --text-muted: #c5cad8;
-
+      --text-muted: #d6dceb;
       --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       --font-serif: 'Source Serif Pro', 'Georgia', serif;
-
       --mono: 'JetBrains Mono', monospace;
       --r: 12px;
     }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: var(--font-sans);
-      background: radial-gradient(circle at top, #262d3a 0, var(--bg) 55%);
+      background: radial-gradient(circle at top, #3e4961 0, var(--bg) 58%);
       color: var(--text-main);
       min-height: 100vh;
     }
-
-    .app {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 40px 24px 64px;
-    }
-
-    .header {
-      text-align: left;
-      margin-bottom: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      object-fit: cover;
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(126,168,255,0.45);
-      background: rgba(126,168,255,0.12);
-      color: var(--accent-ice);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .header-main {
-      margin-top: 8px;
-    }
-
-    .header h1 {
-      font-family: var(--font-serif);
-      font-size: 32px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 6px;
-    }
-
-    .header p {
-      font-size: 14px;
-      color: var(--text-muted);
-      max-width: 560px;
-    }
-
-    .status-line {
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      text-align: right;
-    }
-
-    .card {
-      background: #242a37;             /* deutlich heller als vorher */
-      border: 1px solid var(--border-soft);
-      border-radius: var(--r);
-      padding: 28px 28px 24px;
-      margin-bottom: 20px;
-      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.45);
-    }
-
-    .card-head {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .num {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: var(--accent-steel);
-      color: #0b0d13;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
+    .app { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px; }
+    .header { text-align: left; margin-bottom: 40px; display: flex; flex-direction: column; gap: 12px; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .logo-wrap { display: flex; align-items: center; gap: 16px; }
+    .logo-shell {
+      width: 84px; height: 84px; border-radius: 18px;
+      background: linear-gradient(145deg, rgba(120, 151, 210, 0.20), rgba(33, 41, 58, 0.55));
+      border: 1px solid rgba(167, 191, 235, 0.34);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 14px 30px rgba(9, 14, 24, 0.35);
       flex-shrink: 0;
     }
-
+    .logo {
+      width: 56px; height: 56px; border-radius: 14px; object-fit: cover;
+      opacity: 0.78;
+      mix-blend-mode: screen;
+      filter: brightness(1.15) contrast(1.05) saturate(1.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 10px 22px rgba(17, 24, 39, 0.28);
+    }
+    .header-main { margin-top: 0; }
+    .header h1 {
+      font-family: var(--font-serif); font-size: 32px; font-weight: 600;
+      letter-spacing: 0.02em; margin-bottom: 6px;
+    }
+    .header p { font-size: 14px; color: var(--text-muted); max-width: 560px; }
+    .status-line {
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); text-align: right;
+    }
+    .card {
+      background: #313b50; border: 1px solid var(--border-soft);
+      border-radius: var(--r); padding: 28px 28px 24px;
+      margin-bottom: 20px; box-shadow: 0 18px 46px rgba(0, 0, 0, 0.45);
+    }
+    .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .num {
+      width: 30px; height: 30px; border-radius: 50%; background: var(--accent-steel);
+      color: #0b0d13; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0;
+    }
     .card-title {
-      font-family: var(--font-serif);
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      font-family: var(--font-serif); font-size: 18px; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase;
     }
-
-    .field {
-      margin-bottom: 16px;
-    }
-
+    .field { margin-bottom: 16px; }
     .field label {
-      display: block;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      display: block; font-size: 11px; font-weight: 600; color: var(--text-muted);
+      margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.08em;
     }
-
-    .field input,
-    .field select {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-family: var(--font-sans);
-      font-size: 14px;
+    .field input, .field select {
+      width: 100%; padding: 10px 14px; border-radius: 8px;
+      font-family: var(--font-sans); font-size: 14px;
       background: radial-gradient(circle at top, #2b3141 0, var(--panel-inset) 65%);
-      border: 1px solid var(--border-soft);
-      color: var(--text-main);
-      outline: none;
+      border: 1px solid var(--border-soft); color: var(--text-main); outline: none;
     }
-
-    .field input::placeholder {
-      color: #d1d5db;
-    }
-
-    .field input:focus,
-    .field select:focus {
+    .field input::placeholder { color: #d1d5db; }
+    .field input:focus, .field select:focus {
       border-color: var(--accent-ice);
       box-shadow: 0 0 0 1px rgba(126,168,255,0.5);
       background: radial-gradient(circle at top, #31384a 0, var(--panel-inset) 70%);
     }
-
     .drop {
-      border: 1px solid var(--border-soft);
-      border-radius: var(--r);
-      padding: 32px;
-      text-align: center;
-      cursor: pointer;
+      border: 1px solid var(--border-soft); border-radius: var(--r); padding: 32px;
+      text-align: center; cursor: pointer;
       background: linear-gradient(145deg, #2a303f, #212632);
       transition: all 0.2s;
     }
-
-    .drop:hover,
-    .drop.over {
+    .drop:hover, .drop.over {
       border-color: var(--accent-ice);
       background: radial-gradient(circle at top, #343c4f 0, #232837 70%);
     }
-
-    .drop h3 {
-      font-size: 15px;
-      margin-bottom: 4px;
-    }
-
-    .drop p {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .drop input {
-      display: none;
-    }
-
-    .flist {
-      margin-top: 16px;
-    }
-
+    .drop h3 { font-size: 15px; margin-bottom: 4px; }
+    .drop p { font-size: 12px; color: var(--text-muted); }
+    .drop input { display: none; }
+    .flist { margin-top: 16px; }
     .flist-hint {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      padding-left: 2px;
+      font-size: 11px; color: var(--text-muted); margin-bottom: 8px; padding-left: 2px;
     }
-
     .fitem {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 12px;
-      background: #2a3040;
-      border-radius: 8px;
-      margin-bottom: 6px;
-      font-size: 13px;
-      transition: background 0.15s, opacity 0.15s;
+      display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+      background: #2a3040; border-radius: 8px; margin-bottom: 6px;
+      font-size: 13px; transition: background 0.15s, opacity 0.15s;
       border: 1px solid var(--border-soft);
     }
-
-    .fitem.dragging {
-      opacity: 0.35;
-    }
-
-    .fitem.drag-over {
-      border-top-color: var(--accent-ice);
-    }
-
+    .fitem.dragging { opacity: 0.35; }
+    .fitem.drag-over { border-top-color: var(--accent-ice); }
     .drag-handle {
-      cursor: grab;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      padding: 4px 2px;
-      flex-shrink: 0;
+      cursor: grab; display: flex; flex-direction: column; gap: 2px;
+      padding: 4px 2px; flex-shrink: 0;
     }
-
     .drag-handle span {
-      display: block;
-      width: 12px;
-      height: 2px;
-      background: #4b5563;
-      border-radius: 1px;
+      display: block; width: 12px; height: 2px;
+      background: #4b5563; border-radius: 1px;
     }
-
-    .fitem:hover .drag-handle span {
-      background: #e5e7eb;
-    }
-
+    .fitem:hover .drag-handle span { background: #e5e7eb; }
     .num-label {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--accent-steel);
-      color: #0b0d13;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 700;
-      flex-shrink: 0;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--accent-steel); color: #0b0d13;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; flex-shrink: 0;
     }
-
     .fitem .n {
-      font-weight: 500;
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: var(--text-main);
+      font-weight: 500; flex: 1; overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap; color: var(--text-main);
     }
-
-    .fitem .s {
-      color: var(--text-muted);
-      font-size: 11px;
-      flex-shrink: 0;
-    }
-
+    .fitem .s { color: var(--text-muted); font-size: 11px; flex-shrink: 0; }
     .fitem .x {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-muted);
-      font-size: 18px;
-      flex-shrink: 0;
-      padding: 0 4px;
-      line-height: 1;
+      background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-size: 18px; flex-shrink: 0;
+      padding: 0 4px; line-height: 1;
     }
-
-    .fitem .x:hover {
-      color: var(--accent-warm);
-    }
-
+    .fitem .x:hover { color: var(--accent-warm); }
     .btn {
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: var(--r);
-      font-family: var(--font-sans);
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
+      width: 100%; padding: 16px; border: none; border-radius: var(--r);
+      font-family: var(--font-sans); font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
     }
-
-    .btn-go {
-      background: var(--accent-warm);
-      color: #111827;
-    }
-
-    .btn-go:hover:not(:disabled) {
-      background: #ea580c;
-      transform: translateY(-1px);
-    }
-
-    .btn-go:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
+    .btn-go { background: var(--accent-warm); color: #111827; }
+    .btn-go:hover:not(:disabled) { background: #ea580c; transform: translateY(-1px); }
+    .btn-go:disabled { opacity: 0.4; cursor: not-allowed; }
     .btn-stop {
-      background: transparent;
-      color: #fca5a5;
-      border: 1px solid #f87171;
-      margin-top: 10px;
-      font-size: 14px;
+      background: transparent; color: #fca5a5;
+      border: 1px solid #f87171; margin-top: 10px; font-size: 14px;
     }
-
-    .btn-stop:hover {
-      background: rgba(248, 113, 113, 0.08);
-    }
-
+    .btn-stop:hover { background: rgba(248, 113, 113, 0.08); }
     .btn-dl {
-      background: #eefdf5;
-      color: #166534;
-      border: 1px solid #16a34a;
-      margin-top: 12px;
+      background: #eefdf5; color: #166534;
+      border: 1px solid #16a34a; margin-top: 12px;
     }
-
-    .btn-dl:hover {
-      background: #16a34a;
-      color: #02150a;
-    }
-
-    .prog {
-      margin-top: 28px;
-    }
-
+    .btn-dl:hover { background: #16a34a; color: #02150a; }
+    .prog { margin-top: 28px; }
     .bar-bg {
-      width: 100%;
-      height: 7px;
-      background: #2b3141;
-      border-radius: 999px;
-      overflow: hidden;
-      margin-bottom: 14px;
+      width: 100%; height: 7px; background: #2b3141;
+      border-radius: 999px; overflow: hidden; margin-bottom: 14px;
     }
-
     .bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-ice), #ec4899);
-      border-radius: 999px;
-      transition: width 0.5s;
+      height: 100%; background: linear-gradient(90deg, var(--accent-ice), #ec4899);
+      border-radius: 999px; transition: width 0.5s;
     }
-
-    .prog-ch {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-
-    .prog-st {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-
-    .prog-tm {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-family: var(--mono);
-    }
-
+    .prog-ch { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .prog-st { font-size: 13px; color: var(--text-muted); margin-bottom: 2px; }
+    .prog-tm { font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
     .log-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: var(--font-sans);
-      font-size: 12px;
-      color: var(--text-muted);
-      padding: 8px 0;
-      margin-top: 12px;
+      background: none; border: none; cursor: pointer;
+      font-family: var(--font-sans); font-size: 12px;
+      color: var(--text-muted); padding: 8px 0; margin-top: 12px;
     }
-
-    .log-btn:hover {
-      color: var(--text-main);
-    }
-
+    .log-btn:hover { color: var(--text-main); }
     .log-box {
-      background: #222736;
-      border-radius: 8px;
-      padding: 14px;
-      max-height: 260px;
-      overflow-y: auto;
-      margin-top: 6px;
-      font-family: var(--mono);
-      font-size: 11px;
-      line-height: 1.6;
-      border: 1px solid var(--border-soft);
-      color: #f3f4f6;
+      background: #222736; border-radius: 8px; padding: 14px;
+      max-height: 260px; overflow-y: auto; margin-top: 6px;
+      font-family: var(--mono); font-size: 11px; line-height: 1.6;
+      border: 1px solid var(--border-soft); color: #f3f4f6;
     }
-
-    .log-ok {
-      color: #16a34a;
-    }
-
-    .log-err {
-      color: #fb7185;
-    }
-
-    .log-info {
-      color: var(--text-muted);
-    }
-
+    .log-ok { color: #16a34a; }
+    .log-err { color: #fb7185; }
+    .log-info { color: var(--text-muted); }
     .result {
-      background: #ecfdf3;
-      border: 1px solid #16a34a;
-      border-radius: var(--r);
-      padding: 24px;
-      text-align: left;
-      margin-top: 22px;
-      color: #022c16;
+      background: #ecfdf3; border: 1px solid #16a34a;
+      border-radius: var(--r); padding: 24px; text-align: left;
+      margin-top: 22px; color: #022c16;
     }
-
-    .result h3 {
-      font-size: 16px;
-      margin-bottom: 6px;
-    }
-
-    .result p {
-      font-size: 13px;
-      color: #14532d;
-      margin-bottom: 14px;
-    }
-
-    .rlist {
-      text-align: left;
-      margin-bottom: 14px;
-    }
-
+    .result h3 { font-size: 16px; margin-bottom: 6px; }
+    .result p { font-size: 13px; color: #14532d; margin-bottom: 14px; }
+    .rlist { text-align: left; margin-bottom: 14px; }
     .ritem {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 0; border-bottom: 1px solid rgba(148, 163, 184, 0.4);
       font-size: 13px;
     }
-
-    .ritem:last-child {
-      border-bottom: none;
-    }
-
-    .rcheck {
-      color: #16a34a;
-      font-weight: 700;
-    }
-
+    .ritem:last-child { border-bottom: none; }
+    .rcheck { color: #16a34a; font-weight: 700; }
     .footer {
-      margin-top: 32px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border-soft);
-      font-size: 11px;
-      color: var(--text-muted);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      margin-top: 32px; padding-top: 14px; border-top: 1px solid var(--border-soft);
+      font-size: 11px; color: var(--text-muted);
+      display: flex; flex-direction: column; gap: 4px;
     }
-
     @media (max-width: 720px) {
-      .header-top {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .app {
-        padding: 24px 16px 48px;
-      }
-      .card {
-        padding: 22px 18px 18px;
-      }
-      .status-line {
-        text-align: left;
-      }
+      .header-top { flex-direction: column; align-items: flex-start; }
+      .app { padding: 24px 16px 48px; }
+      .card { padding: 22px 18px 18px; }
+      .status-line { text-align: left; }
     }
   </style>
 </head>
@@ -529,22 +222,20 @@
     <div class="header">
       <div class="header-top">
         <div class="logo-wrap">
-          <img src="/Logo_Dr.DirkInstitute.jpg" alt="Dr. DirkInstitute" class="logo" />
-          <div>
-            <div class="badge">Dr. DirkInstitute</div>
-            <div class="header-main">
-              <h1>Book Creator</h1>
-              <p>Dokumenten-Basis definieren, Publikation spezifizieren, Manuskript fachlich sauber finalisieren.</p>
-            </div>
+          <div class="logo-shell">
+            <img src="/logo.svg" alt="Dr. DirkInstitute" class="logo" />
+          </div>
+          <div class="header-main">
+            <h1>Book Creator</h1>
+            <p>Dokumenten-Basis definieren, Publikation spezifizieren, Manuskript fachlich sauber finalisieren.</p>
           </div>
         </div>
         <div class="status-line">
-          System-Status: Kalibriert für Fachpublikationen · Engine: Claude&nbsp;4&nbsp;Opus
+          System-Status: Kalibriert f?r Fachpublikationen ? Engine: Claude&nbsp;4&nbsp;Opus
         </div>
       </div>
     </div>
 
-    <!-- Karte 1: Dokumenten-Basis & Referenzdaten -->
     <div class="card">
       <div class="card-head">
         <div class="num">1</div>
@@ -565,7 +256,6 @@
       <div class="flist" id="flist"></div>
     </div>
 
-    <!-- Karte 2: Spezifikationen der Publikation -->
     <div class="card">
       <div class="card-head">
         <div class="num">2</div>
@@ -593,41 +283,30 @@
       <div class="field">
         <label>PUBLIKATIONSTYP</label>
         <select id="bookType">
-          <option value="sachbuch">Sachbuch</option>
-          <option value="fachbuch">Fachbuch</option>
-          <option value="artikel">Artikel / Whitepaper</option>
-          <option value="workbook">Workbook</option>
+          <!-- wird per JS aus publication-options.json gefüllt -->
         </select>
       </div>
 
       <div class="field">
         <label>ZIELGRUPPE</label>
         <select id="audience">
-          <option value="c-level">C-Level</option>
-          <option value="management">Management</option>
-          <option value="wissenschaft">Wissenschaft / Forschung</option>
-          <option value="lehre">Lehre / Hochschule</option>
-          <option value="bildung">Bildung / Schule / Weiterbildung</option>
-          <option value="gemischt">Gemischt</option>
+          <!-- wird per JS aus Zielgruppe.json gefüllt -->
         </select>
       </div>
 
       <div class="field">
         <label>LEVEL (VORKENNTNISSE)</label>
         <select id="level">
-          <option value="einsteiger">Einsteiger</option>
-          <option value="fortgeschritten">Fortgeschrittene</option>
-          <option value="expert">Expert:innen</option>
+          <!-- wird per JS aus publication-options.json gefüllt -->
         </select>
       </div>
 
       <div class="field">
         <label>UMFANG PRO KAPITEL</label>
         <select id="length">
-          <option value="kurz">Kurz (kompakt, auf den Punkt)</option>
-          <option value="standard" selected>Standard (empfohlen)</option>
-          <option value="ausfuehrlich">Ausführlich (mehr Beispiele/Details)</option>
+          <!-- wird per JS aus publication-options.json / Umfang-3.json gefüllt -->
         </select>
+        <div id="length-hint" style="margin-top:4px;font-size:11px;color:#9ca3af;"></div>
       </div>
 
       <div class="field">
@@ -643,7 +322,6 @@
       </div>
     </div>
 
-    <!-- Buttons & Progress -->
     <button class="btn btn-go" id="goBtn" onclick="generate()" disabled>
       Manuskript finalisieren
     </button>
@@ -675,8 +353,369 @@
   </div>
 
   <script>
-    // Hier kommt deine JS-Logik (addFiles, renderFiles, generate, SSE etc.) hinein.
-    // Wichtig: In generate() zusätzlich bookType, level und length an die API hängen.
+    let uploadedFiles = [];
+    let currentEventSource = null;
+    let timerInterval = null;
+    let startTime = null;
+    let dragSrcId = null;
+    const apiBase = window.location.origin;
+
+    const dropEl = document.getElementById('drop');
+    const fileInput = document.getElementById('fi');
+
+    dropEl.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropEl.classList.add('over');
+    });
+    dropEl.addEventListener('dragleave', () => dropEl.classList.remove('over'));
+    dropEl.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropEl.classList.remove('over');
+      addFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', () => {
+      addFiles(fileInput.files);
+      fileInput.value = '';
+    });
+
+    function addFiles(fileList) {
+      for (const f of fileList) {
+        const isDuplicate = uploadedFiles.some(
+          (u) => u.file.name === f.name && u.file.size === f.size
+        );
+        if (!isDuplicate) {
+          uploadedFiles.push({ file: f, id: crypto.randomUUID() });
+        }
+      }
+      renderFiles();
+      document.getElementById('goBtn').disabled = uploadedFiles.length === 0;
+    }
+
+    function removeFile(id) {
+      uploadedFiles = uploadedFiles.filter((u) => u.id !== id);
+      renderFiles();
+      document.getElementById('goBtn').disabled = uploadedFiles.length === 0;
+    }
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function renderFiles() {
+      const list = document.getElementById('flist');
+      if (uploadedFiles.length === 0) {
+        list.innerHTML = '';
+        return;
+      }
+
+      list.innerHTML = `<div class="flist-hint">${uploadedFiles.length} Datei${
+        uploadedFiles.length > 1 ? 'en' : ''
+      } ausgewählt – Reihenfolge per Drag\u00a0& Drop ändern</div>`;
+
+      uploadedFiles.forEach((u, idx) => {
+        const div = document.createElement('div');
+        div.className = 'fitem';
+        div.draggable = true;
+        div.dataset.id = u.id;
+        div.innerHTML = `
+          <div class="drag-handle"><span></span><span></span><span></span></div>
+          <div class="num-label">${idx + 1}</div>
+          <span class="n">${u.file.name}</span>
+          <span class="s">${formatSize(u.file.size)}</span>
+          <button class="x" onclick="removeFile('${u.id}')" title="Entfernen">×</button>
+        `;
+
+        div.addEventListener('dragstart', () => {
+          dragSrcId = u.id;
+          div.classList.add('dragging');
+        });
+        div.addEventListener('dragend', () => {
+          div.classList.remove('dragging');
+          list.querySelectorAll('.fitem').forEach((el) => el.classList.remove('drag-over'));
+        });
+        div.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          list.querySelectorAll('.fitem').forEach((el) => el.classList.remove('drag-over'));
+          if (u.id !== dragSrcId) div.classList.add('drag-over');
+        });
+        div.addEventListener('drop', (e) => {
+          e.preventDefault();
+          if (dragSrcId && dragSrcId !== u.id) {
+            const srcIdx = uploadedFiles.findIndex((x) => x.id === dragSrcId);
+            const tgtIdx = uploadedFiles.findIndex((x) => x.id === u.id);
+            const [moved] = uploadedFiles.splice(srcIdx, 1);
+            uploadedFiles.splice(tgtIdx, 0, moved);
+            renderFiles();
+          }
+        });
+
+        list.appendChild(div);
+      });
+    }
+
+    function log(msg, type = 'info') {
+      const ts = new Date().toLocaleTimeString('de-DE');
+      const box = document.getElementById('logBox');
+      if (!box) return;
+      const line = document.createElement('div');
+      line.className = `log-${type}`;
+      line.textContent = `[${ts}] ${msg}`;
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function startTimer() {
+      startTime = Date.now();
+      timerInterval = setInterval(() => {
+        const sec = Math.floor((Date.now() - startTime) / 1000);
+        const m = String(Math.floor(sec / 60)).padStart(2, '0');
+        const s = String(sec % 60).padStart(2, '0');
+        const el = document.getElementById('pTm');
+        if (el) el.textContent = `Laufzeit: ${m}:${s}`;
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    function showStopDialog() {
+      if (!confirm('Vorgang wirklich abbrechen?')) return;
+      if (currentEventSource) {
+        currentEventSource.close();
+        currentEventSource = null;
+      }
+      stopTimer();
+      document.getElementById('stopBtn').style.display = 'none';
+      document.getElementById('prog').style.display = 'none';
+      document.getElementById('goBtn').disabled = false;
+      log('Vorgang abgebrochen.', 'err');
+    }
+
+    async function generate() {
+      if (uploadedFiles.length === 0) return;
+
+      const bookTitle = document.getElementById('title').value.trim() || 'Unbenannte Publikation';
+      const bookSubtitle = document.getElementById('subtitle').value.trim();
+      const bookType = document.getElementById('bookType').value;
+      const audience = document.getElementById('audience').value;
+      const level = document.getElementById('level').value;
+      const length = document.getElementById('length').value;
+      const model = document.getElementById('model').value;
+
+      document.getElementById('logBox').innerHTML = '';
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('prog').style.display = 'block';
+      document.getElementById('goBtn').disabled = true;
+      document.getElementById('stopBtn').style.display = 'block';
+      document.getElementById('bar').style.width = '0%';
+      document.getElementById('pCh').textContent = 'Dateien werden hochgeladen …';
+      document.getElementById('pSt').textContent = '';
+      document.getElementById('pTm').textContent = '';
+      startTimer();
+      log('Upload gestartet …');
+
+      let jobId;
+      try {
+        const formData = new FormData();
+        uploadedFiles.forEach((u) => formData.append('files', u.file));
+
+        const res = await fetch(`${apiBase}/api/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+          throw new Error(err.error || `HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        jobId = data.jobId;
+        log(`Upload abgeschlossen · Job-ID: ${jobId}`, 'ok');
+        log(`${data.files.length} Datei(en) übertragen.`, 'ok');
+      } catch (err) {
+        log(`Fehler beim Upload: ${err.message}`, 'err');
+        document.getElementById('pCh').textContent = 'Fehler beim Upload.';
+        document.getElementById('stopBtn').style.display = 'none';
+        document.getElementById('goBtn').disabled = false;
+        stopTimer();
+        return;
+      }
+
+      document.getElementById('pCh').textContent = 'Generierung gestartet …';
+
+      const params = new URLSearchParams({
+        bookTitle,
+        bookSubtitle,
+        bookType,
+        audience,
+        level,
+        length,
+        model,
+      });
+
+      const es = new EventSource(`${apiBase}/api/generate/${jobId}?${params}`);
+      currentEventSource = es;
+
+      es.addEventListener('progress', (e) => {
+        const d = JSON.parse(e.data);
+        document.getElementById('bar').style.width = d.percent + '%';
+        document.getElementById('pCh').textContent = `Kapitel ${d.chapter} von ${d.total}`;
+        document.getElementById('pSt').textContent = d.status;
+        log(d.status);
+      });
+
+      es.addEventListener('chapter_done', (e) => {
+        const d = JSON.parse(e.data);
+        document.getElementById('bar').style.width = d.percent + '%';
+        log(`✓ Kapitel ${d.chapter}: ${d.title}`, 'ok');
+      });
+
+      es.addEventListener('chapter_error', (e) => {
+        const d = JSON.parse(e.data);
+        log(`✗ Kapitel ${d.chapter}: ${d.error}`, 'err');
+      });
+
+      es.addEventListener('done', (e) => {
+        const d = JSON.parse(e.data);
+        es.close();
+        currentEventSource = null;
+        stopTimer();
+        document.getElementById('bar').style.width = '100%';
+        document.getElementById('pCh').textContent = 'Abgeschlossen';
+        document.getElementById('pSt').textContent = `${d.chapters.length} Kapitel generiert`;
+        document.getElementById('stopBtn').style.display = 'none';
+        document.getElementById('goBtn').disabled = false;
+        log(`Manuskript fertig – ${d.chapters.length} Kapitel.`, 'ok');
+        showResult(d);
+      });
+
+      es.addEventListener('error', (e) => {
+        let msg = 'Verbindungsfehler zum Server.';
+        if (e.data) {
+          try { msg = JSON.parse(e.data).error || msg; } catch (_) {}
+        }
+        log(`Fehler: ${msg}`, 'err');
+        es.close();
+        currentEventSource = null;
+        stopTimer();
+        document.getElementById('pCh').textContent = 'Fehler bei der Generierung.';
+        document.getElementById('stopBtn').style.display = 'none';
+        document.getElementById('goBtn').disabled = false;
+      });
+    }
+
+    function showResult(data) {
+      const items = data.chapters
+        .map(
+          (ch) =>
+            `<div class="ritem"><span class="rcheck">✓</span> Kapitel ${ch.number}: ${ch.title}</div>`
+        )
+        .join('');
+
+      const backendBase = apiBase;
+
+      const el = document.getElementById('result');
+      el.style.display = 'block';
+      el.innerHTML = `
+        <h3>Manuskript generiert</h3>
+        <p>${data.chapters.length} Kapitel erfolgreich erstellt.</p>
+        <div class="rlist">${items}</div>
+
+        <a href="${backendBase}${data.manuscriptUrl}" download>
+          <button class="btn btn-dl">Gesamtmanuskript herunterladen (.md)</button>
+        </a>
+
+        <a href="${backendBase}${data.docxUrl}" download>
+          <button class="btn btn-dl" style="margin-top:8px">
+            Gesamtmanuskript herunterladen (.docx)
+          </button>
+        </a>
+
+        <a href="${backendBase}${data.downloadUrl}" download>
+          <button class="btn btn-dl" style="margin-top:8px">
+            Alle Kapitel herunterladen (.zip)
+          </button>
+        </a>
+      `;
+    }
+
+    // Konfigurations-JSONs laden und Select-Felder befüllen
+    async function loadConfigOptions() {
+      try {
+        const [pubRes, zielRes, umfangRes] = await Promise.all([
+            fetch(`${apiBase}/api/config/publication-options`),
+  	    fetch(`${apiBase}/api/config/zielgruppen`),
+            fetch(`${apiBase}/api/config/umfang`),
+        ]);
+
+        if (!pubRes.ok || !zielRes.ok || !umfangRes.ok) {
+          console.error('Konfigurations-JSONs konnten nicht geladen werden');
+          return;
+        }
+
+        const publicationOptions = await pubRes.json();   // [file:161]
+        const zielgruppen = await zielRes.json();         // [file:160]
+        const umfangOptions = await umfangRes.json();     // [file:162]
+
+        const bookTypeSelect = document.getElementById('bookType');
+        const audienceSelect = document.getElementById('audience');
+        const levelSelect = document.getElementById('level');
+        const lengthSelect = document.getElementById('length');
+        const umfangHint = document.getElementById('length-hint');
+
+        const fillSelect = (select, options, defaultValue) => {
+          if (!select) return;
+          select.innerHTML = '';
+          options.forEach(opt => {
+            const optionEl = document.createElement('option');
+            optionEl.value = opt.value;
+            optionEl.textContent = opt.label;
+            if (opt.value === defaultValue) {
+              optionEl.selected = true;
+            }
+            select.appendChild(optionEl);
+          });
+        };
+
+        const defaultBookType = publicationOptions.bookTypes[0]?.value ?? 'sachbuch';
+        const defaultAudience =
+          (zielgruppen.find(a => a.value === 'gemischt') || zielgruppen[0])?.value ?? 'gemischt';
+        const defaultLevel =
+          (publicationOptions.levels.find(l => l.value === 'fortgeschritten') ||
+            publicationOptions.levels[0])?.value ?? 'fortgeschritten';
+        const defaultLength =
+          (publicationOptions.lengths.find(l => l.value === 'standard') ||
+            publicationOptions.lengths[0])?.value ?? 'standard';
+
+        fillSelect(bookTypeSelect, publicationOptions.bookTypes, defaultBookType);
+        fillSelect(audienceSelect, zielgruppen, defaultAudience);
+        fillSelect(levelSelect, publicationOptions.levels, defaultLevel);
+        fillSelect(lengthSelect, publicationOptions.lengths, defaultLength);
+
+        if (umfangHint && lengthSelect) {
+          const updateHinweis = () => {
+            const value = lengthSelect.value;
+            const cfg =
+              umfangOptions.find(u => u.value === value) ||
+              umfangOptions.find(u => u.value === defaultLength);
+            if (cfg) {
+              umfangHint.textContent = cfg.label;
+            } else {
+              umfangHint.textContent = '';
+            }
+          };
+          lengthSelect.addEventListener('change', updateHinweis);
+          updateHinweis();
+        }
+      } catch (err) {
+        console.error('Fehler beim Laden der Konfiguration:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadConfigOptions);
   </script>
 </body>
 </html>
