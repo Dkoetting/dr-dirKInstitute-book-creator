@@ -643,22 +643,23 @@
     }
 
     // Konfigurations-JSONs laden und Select-Felder befüllen
+    async function fetchJsonWithFallback(primaryUrl, fallbackUrl) {
+      const first = await fetch(primaryUrl);
+      if (first.ok) return first.json();
+
+      const second = await fetch(fallbackUrl);
+      if (second.ok) return second.json();
+
+      throw new Error(`Konfiguration nicht erreichbar: ${primaryUrl} / ${fallbackUrl}`);
+    }
+
     async function loadConfigOptions() {
       try {
-        const [pubRes, zielRes, umfangRes] = await Promise.all([
-            fetch(`${apiBase}/api/config/publication-options`),
-  	    fetch(`${apiBase}/api/config/zielgruppen`),
-            fetch(`${apiBase}/api/config/umfang`),
+        const [publicationOptions, zielgruppen, umfangOptions] = await Promise.all([
+          fetchJsonWithFallback(`${apiBase}/api/config/publication-options`, `${apiBase}/publication-options.json`),
+          fetchJsonWithFallback(`${apiBase}/api/config/zielgruppen`, `${apiBase}/Zielgruppe.json`),
+          fetchJsonWithFallback(`${apiBase}/api/config/umfang`, `${apiBase}/Umfang.json`),
         ]);
-
-        if (!pubRes.ok || !zielRes.ok || !umfangRes.ok) {
-          console.error('Konfigurations-JSONs konnten nicht geladen werden');
-          return;
-        }
-
-        const publicationOptions = await pubRes.json();   // [file:161]
-        const zielgruppen = await zielRes.json();         // [file:160]
-        const umfangOptions = await umfangRes.json();     // [file:162]
 
         const bookTypeSelect = document.getElementById('bookType');
         const audienceSelect = document.getElementById('audience');
@@ -714,7 +715,6 @@
         console.error('Fehler beim Laden der Konfiguration:', err);
       }
     }
-
     document.addEventListener('DOMContentLoaded', loadConfigOptions);
   </script>
 </body>
