@@ -1,4 +1,4 @@
-﻿/**
+/**
  * server/index.js – Express-Einstiegspunkt
  *
  * Startet den Book-Creator-Backend-Server.
@@ -27,6 +27,7 @@ const downloadRouter = require('./routes/download');
 const docxRouter = require('./routes/docx');
 const configRouter = require('./routes/config'); // NEU: Konfig-API
 const healthRouter = require('./routes/health');
+const hubRouter = require('./routes/hub');
 
 const app = express();
 const PORT = process.env.PORT ?? 3001;
@@ -59,6 +60,7 @@ app.use('/api/docx', docxRouter);
 // Konfigurations-Endpunkte für Frontend: /api/config/...
 app.use('/api/config', configRouter);
 app.use('/api/health', healthRouter);
+app.use('/api/hub', hubRouter);
 
 // ── Fallback: alle anderen Pfade → index.html (SPA-Muster) ─────────────────
 app.get('*', (_req, res) => {
