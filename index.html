@@ -50,7 +50,7 @@
       filter: brightness(1.15) contrast(1.05) saturate(1.08);
       border: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow: 0 10px 22px rgba(17, 24, 39, 0.28);
-    }
+    }
     .header-main { margin-top: 0; }
     .header h1 {
       font-family: var(--font-serif); font-size: 32px; font-weight: 600;
@@ -227,11 +227,11 @@
           </div>
           <div class="header-main">
             <h1>Book Creator</h1>
-            <p>Dokumenten-Basis definieren, Publikation spezifizieren, Manuskript fachlich sauber finalisieren.</p>
+            <p>Automatisiert Dokumente | Publikation erstellen, BITTE den Output verifizieren, HI nutzen!</p>
           </div>
         </div>
         <div class="status-line">
-          System-Status: Kalibriert f?r Fachpublikationen ? Engine: Claude&nbsp;4&nbsp;Opus
+          System-Status: Online
         </div>
       </div>
     </div>
@@ -348,7 +348,7 @@
 
     <div class="footer">
       <div>Audit: Ausgaben gemäß Zitierregeln und Formalstandards des Dr.‑DirkInstitute.</div>
-      <div>Lokale Verarbeitung &amp; Enterprise-Level Data Protection.</div>
+      
     </div>
   </div>
 
@@ -643,23 +643,22 @@
     }
 
     // Konfigurations-JSONs laden und Select-Felder befüllen
-    async function fetchJsonWithFallback(primaryUrl, fallbackUrl) {
-      const first = await fetch(primaryUrl);
-      if (first.ok) return first.json();
-
-      const second = await fetch(fallbackUrl);
-      if (second.ok) return second.json();
-
-      throw new Error(`Konfiguration nicht erreichbar: ${primaryUrl} / ${fallbackUrl}`);
-    }
-
     async function loadConfigOptions() {
       try {
-        const [publicationOptions, zielgruppen, umfangOptions] = await Promise.all([
-          fetchJsonWithFallback(`${apiBase}/api/config/publication-options`, `${apiBase}/publication-options.json`),
-          fetchJsonWithFallback(`${apiBase}/api/config/zielgruppen`, `${apiBase}/Zielgruppe.json`),
-          fetchJsonWithFallback(`${apiBase}/api/config/umfang`, `${apiBase}/Umfang.json`),
+        const [pubRes, zielRes, umfangRes] = await Promise.all([
+            fetch(`${apiBase}/api/config/publication-options`),
+  	    fetch(`${apiBase}/api/config/zielgruppen`),
+            fetch(`${apiBase}/api/config/umfang`),
         ]);
+
+        if (!pubRes.ok || !zielRes.ok || !umfangRes.ok) {
+          console.error('Konfigurations-JSONs konnten nicht geladen werden');
+          return;
+        }
+
+        const publicationOptions = await pubRes.json();   // [file:161]
+        const zielgruppen = await zielRes.json();         // [file:160]
+        const umfangOptions = await umfangRes.json();     // [file:162]
 
         const bookTypeSelect = document.getElementById('bookType');
         const audienceSelect = document.getElementById('audience');
@@ -715,6 +714,7 @@
         console.error('Fehler beim Laden der Konfiguration:', err);
       }
     }
+
     document.addEventListener('DOMContentLoaded', loadConfigOptions);
   </script>
 </body>
